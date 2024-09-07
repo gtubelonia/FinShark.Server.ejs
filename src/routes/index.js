@@ -1,8 +1,8 @@
 var express = require('express');
 
-var usersRouter = require('./users/users');
-var stocksRouter = require('./stocks/stocks');
-var portfolioRouter = require('./portfolio/portfolio')
+var usersRouter = require('./users');
+var stocksRouter = require('./stocks');
+var portfolioRouter = require('./portfolio')
 
 var router = express.Router();
 
