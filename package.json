@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./src/bin/www",
-    "dev": "DEBUG=express:* & nodemon ./src/bin/www",
+    "debug": "NODE_ENV=development & nodemon --watch ./src/bin/www",
+    "dev": "nodemon ./src/bin/www",
     "test": "jest"
   },
   "dependencies": {
@@ -20,7 +21,9 @@
     "jade": "~1.11.0",
     "mongoose": "^8.6.1",
     "mongoose-unique-validator": "^5.0.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"

@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -23,7 +22,4 @@ const UserSchema = new mongoose.Schema({
 },
     { versionKey: '__v' })
 
-UserSchema.plugin(uniqueValidator, { message: "Username must be unique" })
-const User = mongoose.model("User", UserSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", UserSchema);
