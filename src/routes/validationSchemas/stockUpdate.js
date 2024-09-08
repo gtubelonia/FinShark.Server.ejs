@@ -11,6 +11,11 @@ module.exports = updateStockValidationSchema = {
         }
     },
     purchase: {
+        optional: {
+            options: {
+                nullable: true
+            }
+        },
         isCurrency: {
             options: {
                 symbol: '$',

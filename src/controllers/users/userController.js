@@ -1,6 +1,7 @@
 var { argonHash, argonVerify } = require('../../utils/hash');
 var User = require('../../mongoose/schemas/user');
-var {matchedData, validationResult } = require('express-validator');
+var Stock = require('../../mongoose/schemas/stock');
+var { matchedData, validationResult } = require('express-validator');
 
 async function UserLogin(req, res, next) {
 
@@ -45,4 +46,76 @@ async function UserAdd(req, res, next) {
     }
 };
 
-module.exports = { UserLogin, UserAdd }
+async function UserGetPortfolio(req, res, next) {
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.send(result.array());
+    const data = matchedData(req);
+    console.log(data.id)
+    try {
+        let foundUser = await User.findById(data.id).populate('portfolio').exec();
+        if (!foundUser) {
+            return res.status(400).send("This User Could Not Be Found")
+        }
+
+        res.status(200).send(foundUser.portfolio);
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function UserRemovePortfolioItem(req, res, next) {
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.send(result.array());
+    const data = matchedData(req);
+    console.log(data)
+    try {
+        let foundUser = await User.findById(data.id).populate('portfolio').exec();
+        if (!foundUser) {
+            return res.status(400).send("This User Could Not Be Found")
+        }
+
+        let i = foundUser.portfolio.findIndex((stock) => {
+            return stock.symbol == data.symbol;
+        });
+        foundUser.portfolio.splice(i, 1);
+
+        await foundUser.save();
+        res.status(200).send(foundUser.portfolio);
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function UserAddPortfolioItem(req, res, next) {
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.send(result.array());
+    const data = matchedData(req);
+    try {
+        let foundUser = await User.findById(data.id).populate('portfolio').exec();
+        if (!foundUser) {
+            return res.status(400).send("This User Could Not Be Found");
+        }
+
+        let foundStock = await Stock.findOne({ symbol: data.symbol });
+        if (!foundStock) {
+            return res.status(400).send("This stock Could Not Be Found");
+        }
+
+        let i = foundUser.portfolio.findIndex((stock) => {
+            return stock.symbol == data.symbol;
+        });
+        if (i >= 0) {
+            return res.status(400).send("Stock is already in portfolio");
+        }
+
+        foundUser.portfolio.push(foundStock);
+
+        await foundUser.save();
+
+        res.status(200).send(foundUser.portfolio);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = { UserLogin, UserAdd, UserGetPortfolio, UserRemovePortfolioItem, UserAddPortfolioItem }

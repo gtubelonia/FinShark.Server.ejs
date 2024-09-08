@@ -1,5 +1,6 @@
 var Stock = require('../../mongoose/schemas/stock');
 var { matchedData, validationResult } = require('express-validator');
+var { ToStockDto } = require('./stockDto');
 
 async function StockCreate(req, res, next) {
     const result = validationResult(req);
@@ -12,7 +13,7 @@ async function StockCreate(req, res, next) {
         }
         const newStock = new Stock(data);
         const savedStock = await newStock.save();
-        return res.status(201).send(savedStock);
+        return res.status(201).send(ToStockDto(savedStock));
     } catch (err) {
         return (next(err));
     }
@@ -35,7 +36,7 @@ async function StockUpdate(req, res, next) {
         }
 
         const updatedStock = await foundStock.save();
-        return res.status(201).send(updatedStock);
+        return res.status(201).send(ToStockDto(updatedStock));
     } catch (err) {
         return (next(err));
     }
@@ -59,7 +60,7 @@ async function StockDelete(req, res, next) {
     }
 }
 
-async function StockGet(req, res, next){
+async function StockGet(req, res, next) {
     const result = validationResult(req);
     if (!result.isEmpty()) return res.send(result.array());
     const params = matchedData(req, { locations: ['params'] });
@@ -70,7 +71,7 @@ async function StockGet(req, res, next){
             return res.status(400).send("This Stock does not exist")
         }
 
-        return res.status(200).send(foundStock);
+        return res.status(200).send(ToStockDto(foundStock));
     } catch (err) {
         return (next(err));
     }
