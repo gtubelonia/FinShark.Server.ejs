@@ -1,23 +1,23 @@
 var express = require('express');
 const asyncHandler = require('express-async-handler');
 var router = express.Router();
-const { StockAdd, StockUpdate } = require('../controllers/stocks/stockController');
+const { StockCreate, StockUpdate, StockDelete, StockGet } = require('../controllers/stocks/stockController');
 const createStock = require('./validationSchemas/stockCreate');
 const updateStock = require('./validationSchemas/stockUpdate')
 const { param, checkSchema } = require('express-validator');
 
 router.use(express.json())
 
-router.get('/', function (req, res, next) {
-
-  return res.send('stocks.js');
-})
-
+router.get(
+  '/:symbol',
+  param('symbol').notEmpty().isAlpha(),
+  asyncHandler(StockGet)
+);
 
 router.post(
   '/add',
   checkSchema(createStock),
-  asyncHandler(StockAdd)
+  asyncHandler(StockCreate)
 );
 
 router.patch(
@@ -27,5 +27,10 @@ router.patch(
   asyncHandler(StockUpdate)
 );
 
+router.delete(
+  '/delete/:symbol',
+  param('symbol').notEmpty().isAlpha(),
+  asyncHandler(StockDelete)
+);
 
 module.exports = router;

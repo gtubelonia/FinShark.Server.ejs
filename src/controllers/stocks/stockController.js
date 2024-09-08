@@ -1,7 +1,7 @@
 var Stock = require('../../mongoose/schemas/stock');
 var { matchedData, validationResult } = require('express-validator');
 
-async function StockAdd(req, res, next) {
+async function StockCreate(req, res, next) {
     const result = validationResult(req);
     if (!result.isEmpty()) return res.send(result.array());
     const data = matchedData(req);
@@ -40,4 +40,40 @@ async function StockUpdate(req, res, next) {
         return (next(err));
     }
 }
-module.exports = { StockAdd, StockUpdate }
+
+async function StockDelete(req, res, next) {
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.send(result.array());
+    const params = matchedData(req, { locations: ['params'] });
+
+    try {
+        await Stock.init();
+        var foundStock = await Stock.findOneAndDelete({ symbol: params.symbol }).exec();
+        if (!foundStock) {
+            return res.status(400).send("This Stock does not exist")
+        }
+
+        return res.sendStatus(204);
+    } catch (err) {
+        return (next(err));
+    }
+}
+
+async function StockGet(req, res, next){
+    const result = validationResult(req);
+    if (!result.isEmpty()) return res.send(result.array());
+    const params = matchedData(req, { locations: ['params'] });
+
+    try {
+        var foundStock = await Stock.findOne({ symbol: params.symbol }).exec();
+        if (!foundStock) {
+            return res.status(400).send("This Stock does not exist")
+        }
+
+        return res.status(200).send(foundStock);
+    } catch (err) {
+        return (next(err));
+    }
+}
+
+module.exports = { StockCreate, StockUpdate, StockDelete, StockGet }
