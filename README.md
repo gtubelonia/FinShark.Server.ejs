@@ -1,2 +1,4 @@
-this is a react frontend for a project i created following a youtube course.
-it was meant for a .NET backend but i have updated it to point towards an express.js backend
+this is an express.js backend i created for Finshark.
+the original backend was in .NET with a sql database.
+
+this uses mongo db.
