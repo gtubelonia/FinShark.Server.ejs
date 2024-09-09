@@ -7,7 +7,7 @@ var logger = require('morgan');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var passport = require('passport');
-
+require('./strategies/local');
 var routes = require('./routes/index');
 
 var app = express();
@@ -30,11 +30,13 @@ app.use(session({
     maxAge: 60000 * 60,
   }
 }));
-app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api', routes);
 

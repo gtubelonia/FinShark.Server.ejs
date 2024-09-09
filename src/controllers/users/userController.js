@@ -17,7 +17,9 @@ async function UserLogin(req, res, next) {
         let verify = await argonVerify(foundUser.password, password)
 
         if (verify) {
-            return res.send(foundUser);
+            req.session.visited = true;
+            req.session.user = foundUser.userName;
+            return res.status(200).send("Login Successful");
         } else {
             return res.status(400).send({ msg: "Bad Request. Could not find user based on credentials" });
         }

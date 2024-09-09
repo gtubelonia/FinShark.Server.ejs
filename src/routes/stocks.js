@@ -11,6 +11,11 @@ router.use(express.json())
 router.get(
   '/:symbol',
   param('symbol').notEmpty().isAlpha(),
+  (req, res, next) => {
+    console.log(req.session);
+    console.log(req.sessionID);
+    next();
+  },
   asyncHandler(StockGet)
 );
 

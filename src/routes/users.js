@@ -4,18 +4,36 @@ var { UserLogin, UserAdd, UserGetPortfolio, UserRemovePortfolioItem, UserAddPort
 const { param, body, checkSchema } = require('express-validator');
 const createUserValidationSchema = require('./validationSchemas/userCreate');
 const asyncHandler = require('express-async-handler')
+const passport = require('passport');
+
 
 router.use(express.json())
+
+router.get(
+    '/login',
+    passport.authenticate('local'),
+    (req, res, next) => {
+        res.sendStatus(200);
+    }
+);
+
+router.get("/logout", (req, res, next) => {
+    console.log(req.session)
+
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        console.log("After: ", req.session)
+
+        res.sendStatus(200);
+    });
+});
 
 router.post(
     '/add',
     checkSchema(createUserValidationSchema),
     asyncHandler(UserAdd)
-);
-
-router.get(
-    '/login',
-    asyncHandler(UserLogin)
 );
 
 router.get(
