@@ -9,10 +9,12 @@ const StockSchema = new mongoose.Schema({
         type: String,
     },
     purchase: {
-        type: mongoose.Types.Decimal128
+        type: mongoose.Types.Decimal128,
+        get: parseToFloat
     },
     lastDiv: {
-        type: mongoose.Types.Decimal128
+        type: mongoose.Types.Decimal128,
+        get: parseToFloat
     },
     industry: {
         type: String,
@@ -22,4 +24,8 @@ const StockSchema = new mongoose.Schema({
     },
 })
 
+function parseToFloat(num){
+
+    return parseFloat(num);
+}
 module.exports = mongoose.model("Stock", StockSchema);

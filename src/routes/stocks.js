@@ -1,21 +1,17 @@
-var express = require('express');
+const express = require('express');
 const asyncHandler = require('express-async-handler');
-var router = express.Router();
+const router = express.Router();
 const { StockCreate, StockUpdate, StockDelete, StockGet } = require('../controllers/stocks/stockController');
 const createStock = require('./validationSchemas/stockCreate');
 const updateStock = require('./validationSchemas/stockUpdate')
 const { param, checkSchema } = require('express-validator');
+const {isAuth} = require('../middleware/authMiddleware');
 
 router.use(express.json())
 
 router.get(
   '/:symbol',
   param('symbol').notEmpty().isAlpha(),
-  (req, res, next) => {
-    console.log(req.session);
-    console.log(req.sessionID);
-    next();
-  },
   asyncHandler(StockGet)
 );
 

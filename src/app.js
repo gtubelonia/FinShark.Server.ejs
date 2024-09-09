@@ -7,7 +7,9 @@ var logger = require('morgan');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var cors = require('cors');
 require('./strategies/local');
+const corsOptions = require('./middleware/corsConfig');
 var routes = require('./routes/index');
 
 var app = express();
@@ -16,10 +18,12 @@ var app = express();
 mongoose.connect('mongodb://localhost:27017/finshark')
   .then(() => console.log('connected to database'))
   .catch((err) => console.log(`Error:${err}`));
+mongoose.set('toJSON', { getters: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
 
 app.use(logger('dev'));
 app.use(session({
@@ -34,6 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors(corsOptions));
 
 app.use(passport.initialize());
 app.use(passport.session());
