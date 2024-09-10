@@ -8,7 +8,8 @@ function toStockFromFmp(data) {
         purchase: parseFloat(data.price),
         lastDiv: parseFloat(data.lastDiv),
         industry: data.industry,
-        marketCap: parseInt(data.mktCap)
+        marketCap: parseInt(data.mktCap),
+        sector: data.sector
     }
     return stock
 }

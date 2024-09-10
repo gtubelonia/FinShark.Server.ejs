@@ -22,10 +22,12 @@ const StockSchema = new mongoose.Schema({
     marketCap: {
         type: Number
     },
+    sector: {
+        type: String
+    }
 })
 
-function parseToFloat(num){
-
+function parseToFloat(num) {
     return parseFloat(num);
 }
 module.exports = mongoose.model("Stock", StockSchema);
