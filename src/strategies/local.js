@@ -25,12 +25,16 @@ const verifyCallback = async (username, password, done) => {
 passport.use(new LocalStrategy(verifyCallback));
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, {
+        id: user.id,
+        username: user.username,
+        email:user.email
+    });
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (user, done) => {
     try {
-        const foundUser = User.findById(id).exec();
+        const foundUser = await User.findById(user.id).exec();
 
         done(null, foundUser);
     } catch (err) {

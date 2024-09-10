@@ -8,7 +8,7 @@ async function GetPortfolio(req, res, next) {
     console.log(req.session.passport.user);
 
     try {
-        let foundUser = await User.findById(req.session.passport.user).populate('portfolio').exec();
+        let foundUser = await User.findById(req.session.passport.user.id).populate('portfolio').exec();
         if (!foundUser) {
             return res.status(400).send("This User Could Not Be Found")
         }
@@ -47,7 +47,7 @@ async function AddPortfolioItem(req, res, next) {
     if (!result.isEmpty()) return res.send(result.array());
     const data = matchedData(req);
     try {
-        let foundUser = await User.findById(req.session.passport.user).populate('portfolio').exec();
+        let foundUser = await User.findById(req.session.passport.user.id).populate('portfolio').exec();
         if (!foundUser) {
             return res.status(400).send("This User Could Not Be Found");
         }

@@ -12,8 +12,8 @@ router.post(
     '/login',
     passport.authenticate('local'),
     (req, res, next) => {
-        console.log("cookie:", res.cookie);
-        res.sendStatus(200);
+        console.log("cookie:", res.user);
+        res.status(200).send(req.session.passport.user);
     }
 );
 
