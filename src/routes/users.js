@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { UserAdd } = require('../controllers/users/userController');
+const { UserRegister } = require('../controllers/users/userController');
 const { checkSchema } = require('express-validator');
 const createUserValidationSchema = require('./validationSchemas/userCreate');
 const asyncHandler = require('express-async-handler')
@@ -28,9 +28,9 @@ router.get("/logout", (req, res, next) => {
 });
 
 router.post(
-    '/add',
+    '/register',
     checkSchema(createUserValidationSchema),
-    asyncHandler(UserAdd)
+    asyncHandler(UserRegister)
 );
 
 

@@ -16,7 +16,7 @@ function toStockFromFmp(data) {
 async function getStockFromFmp(symbol) {
     try {
         let fmpStock = await axios.get(`https://financialmodelingprep.com/api/v3/profile/${symbol}?apikey=${process.env.FMPKEY}`);
-
+        if (!fmpStock) return null;
         let stock = toStockFromFmp(fmpStock.data[0]);
         return stock;
     } catch (error) {
@@ -24,4 +24,4 @@ async function getStockFromFmp(symbol) {
     }
 }
 
-module.exports = {getStockFromFmp} ;
+module.exports = { getStockFromFmp };

@@ -28,7 +28,7 @@ async function UserLogin(req, res, next) {
 
 }
 
-async function UserAdd(req, res, next) {
+async function UserRegister(req, res, next) {
     const result = validationResult(req);
     if (!result.isEmpty()) return res.send(result.array());
     const data = matchedData(req);
@@ -49,4 +49,4 @@ async function UserAdd(req, res, next) {
 
 
 
-module.exports = { UserLogin, UserAdd}
+module.exports = { UserLogin, UserRegister}
