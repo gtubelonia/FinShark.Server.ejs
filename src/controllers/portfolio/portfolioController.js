@@ -13,7 +13,14 @@ async function GetPortfolio(req, res, next) {
             return res.status(400).send("This User Could Not Be Found")
         }
 
-        res.status(200).send(foundUser.portfolio);
+        let portfolioList = {};
+        for (let stock of foundUser.portfolio) {
+            const portfolio = portfolioList[stock.sector] ?? [];
+            portfolio.push(stock);
+
+            portfolioList[stock.sector] = portfolio;
+        }
+        res.status(200).send(portfolioList);
     } catch (error) {
         next(error);
     }
@@ -59,7 +66,7 @@ async function AddPortfolioItem(req, res, next) {
             if (!newStock) {
                 return res.status(400).send("This Stock Could Not Be Found");
             }
-            
+
             foundStock = new Stock(newStock);
             await foundStock.save();
         }
