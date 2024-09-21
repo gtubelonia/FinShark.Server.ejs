@@ -1,30 +1,30 @@
-const express = require('express');
-const asyncHandler = require('express-async-handler');
-const router = express.Router();
-const { query} = require('express-validator');
-const {GetPortfolio, RemovePortfolioItem, AddPortfolioItem } = require('../controllers/portfolio/portfolioController');
-const { isAuth } = require('../middleware/authMiddleware');
+const express = require('express')
+const asyncHandler = require('express-async-handler')
+const router = express.Router()
+const { param } = require('express-validator')
+const portfolioController = require('../controllers/portfolio/portfolio.controller')
+const { isAuth } = require('../middleware/authMiddleware')
 
 router.use(express.json())
 
 router.get(
-    '/',
-    isAuth,
-    asyncHandler(GetPortfolio)
-);
+  '/',
+  isAuth,
+  asyncHandler(portfolioController.GetPortfolio)
+)
 
 router.patch(
-    '/delete',
-    isAuth,
-    query('symbol').notEmpty().escape().isAlpha(),
-    asyncHandler(RemovePortfolioItem)
-);
+  '/delete/:symbol',
+  isAuth,
+  param('symbol').notEmpty().escape().isAlpha(),
+  asyncHandler(portfolioController.RemovePortfolioItem)
+)
 
 router.patch(
-    '/add',
-    isAuth,
-    query('symbol').notEmpty().escape().isAlpha(),
-    asyncHandler(AddPortfolioItem)
-);
+  '/add/:symbol',
+  isAuth,
+  param('symbol').notEmpty().escape().isAlpha(),
+  asyncHandler(portfolioController.AddPortfolioItem)
+)
 
-module.exports = router;
+module.exports = router

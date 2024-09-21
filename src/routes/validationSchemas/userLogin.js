@@ -1,18 +1,18 @@
-module.exports = loginUserValidationSchema = {
-    username: {
-        notEmpty: {
-            errorMessage: "Username is required"
-        },
-        isString: {
-            errorMessage: "Username must be a string!",
-        },
+exports.LoginUserValidationSchema = {
+  username: {
+    notEmpty: {
+      errorMessage: 'Username is required'
     },
-    password: {
-        notEmpty: {
-            errorMessage: "Password is required"
-        },
-        isString: {
-            errorMessage: "Password must be a string!",
-        },
+    isString: {
+      errorMessage: 'Username must be a string!'
+    }
+  },
+  password: {
+    notEmpty: {
+      errorMessage: 'Password is required'
     },
+    isString: {
+      errorMessage: 'Password must be a string!'
+    }
+  }
 }

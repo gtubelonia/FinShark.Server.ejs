@@ -1,13 +1,14 @@
 const isAuth = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.status(401).json({ msg: 'You need proper authorization' });
-    }
-};
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.status(401).json({ msg: 'You need proper authorization' })
+  }
+}
 
-isAdmin = (req, res, next) => {
+// TODO finish adming role
+// isAdmin = (req, res, next) => {
 
-};
+// }
 
-module.exports = { isAuth, isAdmin };
+module.exports = { isAuth }
