@@ -1,17 +1,17 @@
-var express = require('express');
+const express = require('express')
 
-var usersRouter = require('./users');
-var stocksRouter = require('./stocks');
-var portfolioRouter = require('./portfolios')
+const usersRouter = require('./users')
+const stocksRouter = require('./stocks')
+const portfolioRouter = require('./portfolios')
 
-var router = express.Router();
+const router = express.Router()
 
-router.get('/', (req, res)=>{
-    res.send('router home page');
+router.get('/', (req, res) => {
+  res.send('router home page')
 })
 
-router.use('/users', usersRouter);
-router.use('/stocks', stocksRouter);
-router.use('/portfolios', portfolioRouter);
+router.use('/users', usersRouter)
+router.use('/stocks', stocksRouter)
+router.use('/portfolios', portfolioRouter)
 
-module.exports = router;
+module.exports = router

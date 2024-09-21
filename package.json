@@ -6,7 +6,8 @@
     "start": "node ./src/bin/www",
     "debug": "NODE_ENV=development & nodemon --watch ./src/bin/www",
     "dev": "nodemon ./src/bin/www",
-    "test": "jest"
+    "test": "jest",
+    "lint": "standard --fix"
   },
   "dependencies": {
     "argon2": "^0.41.1",
@@ -25,7 +26,8 @@
     "mongoose-unique-validator": "^5.0.1",
     "morgan": "~1.9.1",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "standard": "^17.1.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
