@@ -1,11 +1,10 @@
 const express = require('express')
 const asyncHandler = require('express-async-handler')
 const router = express.Router()
-const stockController = require('../controllers/stocks/stockController')
+const stockController = require('../controllers/stocks/stock.controller')
 const createStock = require('./validationSchemas/stockCreate')
 const updateStock = require('./validationSchemas/stockUpdate')
 const { param, checkSchema } = require('express-validator')
-const { isAuth } = require('../middleware/authMiddleware')
 
 router.use(express.json())
 

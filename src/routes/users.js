@@ -11,7 +11,7 @@ router.use(express.json())
 router.post(
   '/login',
   passport.authenticate('local'),
-  asyncHandler(userController.UserLoggedin)
+  asyncHandler(userController.UserLogin)
 )
 
 router.get('/logout',

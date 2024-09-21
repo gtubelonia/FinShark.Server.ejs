@@ -6,8 +6,9 @@ const isAuth = (req, res, next) => {
   }
 }
 
-isAdmin = (req, res, next) => {
+// TODO finish adming role
+// isAdmin = (req, res, next) => {
 
-}
+// }
 
-module.exports = { isAuth, isAdmin }
+module.exports = { isAuth }

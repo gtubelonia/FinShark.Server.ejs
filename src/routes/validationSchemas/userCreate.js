@@ -1,4 +1,4 @@
-module.exports = createUserValidationSchema = {
+exports.CreateUserValidationSchema = {
   username: {
     isLength: {
       options: {

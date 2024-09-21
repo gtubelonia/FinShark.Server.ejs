@@ -1,4 +1,4 @@
-module.exports = loginUserValidationSchema = {
+exports.LoginUserValidationSchema = {
   username: {
     notEmpty: {
       errorMessage: 'Username is required'

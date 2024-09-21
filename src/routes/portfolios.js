@@ -1,8 +1,8 @@
 const express = require('express')
 const asyncHandler = require('express-async-handler')
 const router = express.Router()
-const { query } = require('express-validator')
-const { GetPortfolio, RemovePortfolioItem, AddPortfolioItem } = require('../controllers/portfolio/portfolioController')
+const { param } = require('express-validator')
+const portfolioController = require('../controllers/portfolio/portfolio.controller')
 const { isAuth } = require('../middleware/authMiddleware')
 
 router.use(express.json())
@@ -10,21 +10,21 @@ router.use(express.json())
 router.get(
   '/',
   isAuth,
-  asyncHandler(GetPortfolio)
+  asyncHandler(portfolioController.GetPortfolio)
 )
 
 router.patch(
-  '/delete',
+  '/delete/:symbol',
   isAuth,
-  query('symbol').notEmpty().escape().isAlpha(),
-  asyncHandler(RemovePortfolioItem)
+  param('symbol').notEmpty().escape().isAlpha(),
+  asyncHandler(portfolioController.RemovePortfolioItem)
 )
 
 router.patch(
-  '/add',
+  '/add/:symbol',
   isAuth,
-  query('symbol').notEmpty().escape().isAlpha(),
-  asyncHandler(AddPortfolioItem)
+  param('symbol').notEmpty().escape().isAlpha(),
+  asyncHandler(portfolioController.AddPortfolioItem)
 )
 
 module.exports = router

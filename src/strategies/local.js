@@ -1,7 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('../mongoose/schemas/user')
-const { argonVerify } = require('../utils/hash')
+const { ArgonVerify } = require('../utils/hash')
 
 // const customFields = {
 //  usernameField: 'customUserName'
@@ -13,8 +13,8 @@ const verifyCallback = async (username, password, done) => {
     const foundUser = await User.findOne({ email: username }).exec()
 
     if (!foundUser) throw new Error('Invalid username or password')
-    const verify = await argonVerify(foundUser.password, password)
-    if (verify == false) throw new Error('Invalid username or password')
+    const verify = await ArgonVerify(foundUser.password, password)
+    if (verify === false) throw new Error('Invalid username or password')
 
     done(null, foundUser)
   } catch (err) {
@@ -32,6 +32,7 @@ passport.serializeUser((user, done) => {
   })
 })
 
+// TODO review this. maybe abstract it by calling the usermodel instead of the mongoose user model
 passport.deserializeUser(async (user, done) => {
   try {
     const foundUser = await User.findById(user.id).exec()

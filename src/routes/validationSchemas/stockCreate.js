@@ -1,4 +1,4 @@
-module.exports = createStockValidationSchema = {
+exports.CreateStockValidationSchema = {
   symbol: {
     notEmpty: {
       errorMessage: 'Stock Symbol is required'
