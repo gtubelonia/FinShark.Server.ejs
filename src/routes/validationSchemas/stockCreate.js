@@ -1,4 +1,4 @@
-exports.CreateStockValidationSchema = {
+const CreateStockValidationSchema = {
   symbol: {
     notEmpty: {
       errorMessage: 'Stock Symbol is required'
@@ -42,3 +42,5 @@ exports.CreateStockValidationSchema = {
     }
   }
 }
+
+module.exports = CreateStockValidationSchema

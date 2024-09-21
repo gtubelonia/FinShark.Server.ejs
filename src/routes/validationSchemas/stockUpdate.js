@@ -1,4 +1,4 @@
-exports.UpdateStockValidationSchema = {
+const UpdateStockValidationSchema = {
   companyName: {
     optional: {
       options: {
@@ -59,3 +59,5 @@ exports.UpdateStockValidationSchema = {
     }
   }
 }
+
+module.exports = UpdateStockValidationSchema

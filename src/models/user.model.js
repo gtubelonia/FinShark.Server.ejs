@@ -50,7 +50,7 @@ exports.AddPortfolioItem = async function (userId, newStock) {
   const i = user.portfolio.findIndex((stock) => {
     return stock.symbol === newStock.symbol
   })
-  console.log(i)
+
   if (i > 0) throw new Error('Stock is already in portfolio')
 
   user.portfolio.push(newStock)

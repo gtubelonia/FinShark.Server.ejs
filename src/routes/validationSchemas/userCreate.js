@@ -1,4 +1,4 @@
-exports.CreateUserValidationSchema = {
+const CreateUserValidationSchema = {
   username: {
     isLength: {
       options: {
@@ -6,7 +6,7 @@ exports.CreateUserValidationSchema = {
         max: 32
       },
       errorMessage:
-                'Username must be at least 5 characters with a max of 32 characters'
+        'Username must be at least 5 characters with a max of 32 characters'
     },
     notEmpty: {
       errorMessage: 'Username is required'
@@ -30,3 +30,4 @@ exports.CreateUserValidationSchema = {
     isAlphanumeric: true
   }
 }
+module.exports = CreateUserValidationSchema
