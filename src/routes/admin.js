@@ -4,7 +4,7 @@ const router = express.Router()
 const adminController = require('../controllers/admin/admin.controller')
 
 router.get('/update',
-    asyncHandler(adminController.UpdateTradeableStockPrices)
+  asyncHandler(adminController.UpdateTradeableStockPrices)
 )
 
 module.exports = router

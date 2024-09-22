@@ -37,8 +37,7 @@ exports.InsertOrUpdate = async function (data) {
   const stock = await Stock.findOneAndUpdate({ symbol: data.symbol }, data, {
     new: true,
     upsert: true
-  }).exec();
+  }).exec()
 
   return stock
-
 }

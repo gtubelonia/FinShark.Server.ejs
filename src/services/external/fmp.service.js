@@ -1,21 +1,18 @@
 const axios = require('axios').default
 const fmpUrl = 'https://financialmodelingprep.com/api'
-const stockModel = require('../../models/stock.model')
-const fs = require('node:fs/promises')
 // we are using FMP to pull stock data into the application
 
-function GetFmpApi(version, service, param, query = '') {
-
+function GetFmpApi (version, service, param, query = '') {
   if (query) {
     query = `?${query}&apikey=${process.env.FMPKEY}`
   } else {
     query = `?apikey=${process.env.FMPKEY}`
   }
 
-  let url = `${fmpUrl}/${version}/${service}/${param}${query}`
+  const url = `${fmpUrl}/${version}/${service}/${param}${query}`
   return url
 }
-function toStockFromFmp(data) {
+function toStockFromFmp (data) {
   const date = new Date()
 
   const dateParts = {
@@ -49,6 +46,4 @@ exports.GetTradeableStocks = async function () {
   const fmpList = await axios.get(url)
 
   return fmpList.data
-
-
 }

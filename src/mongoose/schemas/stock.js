@@ -25,7 +25,7 @@ const StockSchema = new mongoose.Schema({
   sector: {
     type: String
   },
-  lastUpdated:{
+  lastUpdated: {
     type: String
   }
 })

@@ -3,7 +3,7 @@ const stockModel = require('../models/stock.model')
 exports.CreateStock = async function (data) {
   const foundStock = await stockModel.GetBySymbol(data.symbol)
   if (foundStock) throw new Error('This Stock has already been added')
-    data.lastUpdated = new Date()
+  data.lastUpdated = new Date()
   const newStock = await stockModel.Create(data)
 
   return newStock
