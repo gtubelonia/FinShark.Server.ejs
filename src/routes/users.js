@@ -14,7 +14,8 @@ router.post(
   asyncHandler(userController.UserLogin)
 )
 
-router.get('/logout',
+router.get(
+  '/logout',
   userController.UserLogout
 )
 

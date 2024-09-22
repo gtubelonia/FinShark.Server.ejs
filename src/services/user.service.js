@@ -29,10 +29,20 @@ exports.RemovePortfolioItem = async function (userId, symbol) {
 exports.AddPortfolioItem = async function (userId, symbol) {
   let foundStock = await stockModel.GetBySymbol(symbol)
 
+  const date = new Date()
+  const dateParts = {
+    Year: date.getFullYear(),
+    month: date.getMonth(),
+    date: date.getDate()
+  }
+
   if (!foundStock) {
     const newStock = await fmpService.GetStockFromFmp(symbol)
     if (!newStock) throw new Error('This Stock Could Not Be Found')
     foundStock = await stockModel.Create(newStock)
+  } else if (foundStock.lastUpdated !== `${dateParts.Year}/${dateParts.month + 1}/${dateParts.date}`) {
+    const newStock = await fmpService.GetStockFromFmp(symbol)
+    foundStock = await stockModel.UpdateBySymbol(symbol, newStock)
   }
 
   const portfolioList = await userModel.AddPortfolioItem(userId, foundStock)
