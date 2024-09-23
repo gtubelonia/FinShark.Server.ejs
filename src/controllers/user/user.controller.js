@@ -1,6 +1,6 @@
 const userService = require('../../services/user.service')
 const { matchedData, validationResult } = require('express-validator')
-const ToUserDto = require('./Dto/UserDto')
+const ToUserDto = require('./dto/userDto')
 
 exports.UserLogin = async function (req, res, next) {
   return res.status(200).send(req.session.passport.user)

@@ -14,7 +14,6 @@ function GetFmpApi (version, service, param, query = '') {
   return url
 }
 function toStockFromFmp (data) {
-
   const stock = {
     symbol: data.symbol,
     companyName: data.companyName,

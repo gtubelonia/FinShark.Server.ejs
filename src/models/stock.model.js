@@ -41,3 +41,32 @@ exports.InsertOrUpdate = async function (data) {
 
   return stock
 }
+
+exports.AddComment = async function (symbol, newComment) {
+  const stock = await Stock.findOne({ symbol }).populate('comments')
+
+  stock.comments.push(newComment)
+
+  await stock.save()
+  return stock
+}
+
+exports.GetComments = async function (symbol) {
+  const stock = await Stock.findOne({ symbol }).populate('comments')
+
+  return stock
+}
+
+exports.DeleteComment = async function (commentId, symbol) {
+  const stock = await Stock.findOne({ symbol }).populate('comments')
+
+  console.log(stock)
+  const i = stock.comments.findIndex((comment) => {
+    return comment.id === commentId
+  })
+
+  stock.comments.splice(i, 1)
+
+  const savedStock = await stock.save()
+  return savedStock
+}
