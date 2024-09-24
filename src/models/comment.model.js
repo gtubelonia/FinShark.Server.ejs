@@ -9,7 +9,7 @@ exports.AddComment = async function (data) {
 }
 
 exports.GetCommentsForStock = async function (symbol) {
-  const comments = await Comment.find({ symbol }).exec()
+  const comments = await Comment.find({ symbol }).populate('user').exec()
 
   return comments
 }

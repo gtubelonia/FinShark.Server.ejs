@@ -2,7 +2,7 @@ const express = require('express')
 const asyncHandler = require('express-async-handler')
 const router = express.Router()
 const commentController = require('../controllers/comment/comment.controller')
-// const { isAuth } = require('../middleware/authMiddleware')
+const { isAuth } = require('../middleware/authMiddleware')
 const { param, body, checkSchema } = require('express-validator')
 const createCommentValidationSchema = require('./validationSchemas/commentCreate')
 // const updateCommentValidationSchema = require('./validationSchemas/commentUpdate')
@@ -16,7 +16,7 @@ router.get(
 
 router.delete(
   '/delete/:symbol',
-  // isAuth,
+  isAuth,
   param('symbol').notEmpty().escape().isAlpha(),
   body('id').notEmpty(),
   asyncHandler(commentController.DeleteCommentFromStock)
@@ -24,7 +24,7 @@ router.delete(
 
 router.post(
   '/add/:symbol',
-  // isAuth,
+  isAuth,
   param('symbol').notEmpty().escape().isAlpha(),
   checkSchema(createCommentValidationSchema),
   asyncHandler(commentController.AddCommentToStock)

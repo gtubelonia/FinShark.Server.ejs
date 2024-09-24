@@ -16,6 +16,9 @@ exports.AddCommentToStock = async function (req, res, next) {
   if (!result.isEmpty()) return res.send(result.array())
   const body = matchedData(req, { locations: ['body'] })
   const params = matchedData(req, { locations: ['params'] })
+  const user = req.session.passport.user
+
+  body.createdBy = user.id
 
   const comment = await commentService.AddCommentToStock(params.symbol, body)
 

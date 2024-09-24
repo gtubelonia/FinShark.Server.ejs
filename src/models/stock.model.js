@@ -52,7 +52,11 @@ exports.AddComment = async function (symbol, newComment) {
 }
 
 exports.GetComments = async function (symbol) {
-  const stock = await Stock.findOne({ symbol }).populate('comments')
+  const stock = await Stock.findOne({ symbol })
+    .populate({
+      path: 'comments',
+      populate: { path: 'createdBy' }
+    })
 
   return stock
 }
