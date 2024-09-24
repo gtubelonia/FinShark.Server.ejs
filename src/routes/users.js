@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const userController = require('../controllers/users/userController')
+const userController = require('../controllers/user/user.controller')
 const { checkSchema } = require('express-validator')
 const createUserValidationSchema = require('./validationSchemas/userCreate')
 const asyncHandler = require('express-async-handler')

@@ -2,6 +2,8 @@ const hash = require('../utils/hash')
 const userModel = require('../models/user.model')
 const stockModel = require('../models/stock.model')
 const fmpService = require('./external/fmp.service')
+const dateHelper = require('../utils/dateHelper')
+
 exports.CreateUser = async function (data) {
   const foundUser = await userModel.GetByEmail(data.email)
 
@@ -29,18 +31,11 @@ exports.RemovePortfolioItem = async function (userId, symbol) {
 exports.AddPortfolioItem = async function (userId, symbol) {
   let foundStock = await stockModel.GetBySymbol(symbol)
 
-  const date = new Date()
-  const dateParts = {
-    Year: date.getFullYear(),
-    month: date.getMonth(),
-    date: date.getDate()
-  }
-
   if (!foundStock) {
     const newStock = await fmpService.GetStockFromFmp(symbol)
     if (!newStock) throw new Error('This Stock Could Not Be Found')
     foundStock = await stockModel.Create(newStock)
-  } else if (foundStock.lastUpdated !== `${dateParts.Year}/${dateParts.month + 1}/${dateParts.date}`) {
+  } else if (foundStock.lastUpdated !== dateHelper.GetCurrentDate()) {
     const newStock = await fmpService.GetStockFromFmp(symbol)
     foundStock = await stockModel.UpdateBySymbol(symbol, newStock)
   }

@@ -27,6 +27,11 @@ const StockSchema = new mongoose.Schema({
   },
   lastUpdated: {
     type: String
+  },
+  comments: {
+    type: [mongoose.Types.ObjectId],
+    ref: 'Comment',
+    default: []
   }
 })
 

@@ -1,7 +1,7 @@
 const express = require('express')
 const asyncHandler = require('express-async-handler')
 const router = express.Router()
-const stockController = require('../controllers/stocks/stock.controller')
+const stockController = require('../controllers/stock/stock.controller')
 const createStock = require('./validationSchemas/stockCreate')
 const updateStock = require('./validationSchemas/stockUpdate')
 const { param, checkSchema } = require('express-validator')

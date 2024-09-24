@@ -1,5 +1,6 @@
 const axios = require('axios').default
 const fmpUrl = 'https://financialmodelingprep.com/api'
+const dateHelper = require('../../utils/dateHelper')
 // we are using FMP to pull stock data into the application
 
 function GetFmpApi (version, service, param, query = '') {
@@ -13,13 +14,6 @@ function GetFmpApi (version, service, param, query = '') {
   return url
 }
 function toStockFromFmp (data) {
-  const date = new Date()
-
-  const dateParts = {
-    Year: date.getFullYear(),
-    month: date.getMonth(),
-    date: date.getDate()
-  }
   const stock = {
     symbol: data.symbol,
     companyName: data.companyName,
@@ -28,7 +22,7 @@ function toStockFromFmp (data) {
     industry: data.industry,
     marketCap: parseInt(data.mktCap),
     sector: data.sector,
-    lastUpdated: `${dateParts.Year}/${dateParts.month + 1}/${dateParts.date}`
+    lastUpdated: dateHelper.GetCurrentDate()
   }
   return stock
 }
@@ -36,7 +30,9 @@ function toStockFromFmp (data) {
 exports.GetStockFromFmp = async function (symbol) {
   const url = GetFmpApi('v3', 'profile', symbol)
   const fmpStock = await axios.get(url)
+
   if (!fmpStock.data[0]) return null
+
   const stock = toStockFromFmp(fmpStock.data[0])
   return stock
 }

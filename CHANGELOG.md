@@ -1,9 +1,13 @@
+2024/09/24
+
 # Changelog
 
 ## Unreleased
-The App does not track updates for stocks already in its database. I will find some way to update this. probably when a user adds a stock to his/her profile.
 
 ### Added
+comment system implemented.
+can now comment on a stock's company profile
+can create or delete them
 
 ### Changed
 
